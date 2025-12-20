@@ -1,4 +1,4 @@
-import { GoogleGenAI, Type, SchemaType } from "@google/genai";
+import { GoogleGenAI, Type } from "@google/genai";
 import { BookData, GeneratedText } from "../types";
 
 const apiKey = process.env.API_KEY || '';
@@ -14,7 +14,7 @@ export const generateMarketingText = async (data: BookData): Promise<GeneratedTe
     Synopsis: ${data.synopsis}
     
     Tasks:
-    1. Create a "clickbait" title that is catchy and intriguing.
+    1. Create 5 distinct "clickbait" titles that are catchy, intriguing, and viral-worthy.
     2. Write a "short_caption" (approx 100 words). It MUST start with a strong Hook and end with a Cliffhanger that serves as a Call to Action (CTA).
     3. Write a "long_caption" (approx 500 words). It MUST be engaging, immersive, start with a powerful Hook, and end with a suspenseful Cliffhanger CTA.
     
@@ -29,7 +29,10 @@ export const generateMarketingText = async (data: BookData): Promise<GeneratedTe
       responseSchema: {
         type: Type.OBJECT,
         properties: {
-          clickbait: { type: Type.STRING },
+          clickbait: { 
+            type: Type.ARRAY,
+            items: { type: Type.STRING }
+          },
           short_caption: { type: Type.STRING },
           long_caption: { type: Type.STRING },
         },
@@ -49,36 +52,39 @@ export const generateSingleCover = async (data: BookData, seedOffset: number): P
 
   // Providing variation by slightly tweaking the prompt based on seed/index
   const variations = [
-    "Close-up composition",
-    "Wide angle scene",
-    "Character focused",
-    "Symbolic and atmospheric"
+    "Close-up composition of main character",
+    "Wide angle cinematic scene",
+    "Character focused with symbolic elements",
+    "Atmospheric and emotional composition"
   ];
 
   const variation = variations[seedOffset % variations.length];
 
   const prompt = `
     Create a stunning, high-quality book cover art.
-    Title context: ${data.title}
     Genre/Style: ${data.style}
     Synopsis context: ${data.synopsis}
     
-    Key Visual Requirements:
-    1. Aspect Ratio: Vertical Portrait (compatible with 2:3).
-    2. Faces/Characters: Must depict people of Asian or Indonesian descent.
+    IMPORTANT: You MUST render text on the image.
+    1. Title: "${data.title}" -> Font: BOLD, THICK, STRONG. High visibility. Placement: Top or Center.
+    2. Author: "${data.author}" -> Font: THIN, FINE, ELEGANT. Smaller than title. Placement: Bottom or below title.
+    3. Ensure the text color contrasts strongly with the background so it is easily readable.
+    
+    Visual Requirements:
+    1. Aspect Ratio: Vertical Portrait (3:4).
+    2. Faces/Characters: Must depict people of Asian or Indonesian descent if characters are present.
     3. Composition: ${variation}.
     4. Quality: 4k resolution, highly detailed, trending on artstation.
-    5. Do NOT include text on the image if possible, focus on the illustration.
   `;
 
   const response = await ai.models.generateContent({
-    model: 'gemini-2.5-flash-image', // Using flash-image for speed and efficiency for demo
+    model: 'gemini-2.5-flash-image', 
     contents: {
         parts: [{ text: prompt }]
     },
     config: {
         imageConfig: {
-            aspectRatio: "3:4", // Closest API supported ratio to 2:3
+            aspectRatio: "3:4", 
         }
     }
   });

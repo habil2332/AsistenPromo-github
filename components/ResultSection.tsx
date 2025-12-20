@@ -20,16 +20,26 @@ export const ResultSection: React.FC<ResultSectionProps> = ({ results }) => {
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
-    alert("Caption disalin!");
+    alert("Teks disalin!");
   };
 
   return (
     <div className="space-y-8 animate-fade-in">
       
       {/* Clickbait Title Section */}
-      <div className="bg-gradient-to-r from-blue-600 to-indigo-600 p-6 rounded-2xl text-white shadow-xl transform hover:scale-[1.01] transition-transform">
-        <div className="text-blue-100 text-sm font-medium uppercase tracking-wider mb-2">🔥 Judul Clickbait Rekomendasi</div>
-        <h2 className="text-3xl font-bold leading-tight">{results.text.clickbait}</h2>
+      <div className="bg-gradient-to-r from-blue-600 to-indigo-600 p-6 rounded-2xl text-white shadow-xl">
+        <div className="text-blue-100 text-sm font-medium uppercase tracking-wider mb-4 flex items-center gap-2">
+          🔥 5 Rekomendasi Judul Clickbait
+        </div>
+        <div className="space-y-3">
+          {results.text.clickbait.map((title, idx) => (
+             <div key={idx} className="flex items-start gap-3 bg-white/10 p-3 rounded-lg hover:bg-white/20 transition-colors cursor-pointer group" onClick={() => copyToClipboard(title)}>
+               <span className="bg-white/20 w-6 h-6 rounded flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">{idx + 1}</span>
+               <h2 className="text-lg font-bold leading-tight">{title}</h2>
+               <button className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity text-xs bg-white text-blue-600 px-2 py-1 rounded">Copy</button>
+             </div>
+          ))}
+        </div>
       </div>
 
       {/* Covers Grid */}

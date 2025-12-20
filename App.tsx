@@ -26,7 +26,7 @@ const App: React.FC = () => {
   const isFormValid = formData.title.trim() !== '' && 
                       formData.author.trim() !== '' && 
                       formData.synopsis.trim() !== '' && 
-                      formData.style !== '';
+                      formData.style.trim() !== '';
 
   const handleSubmit = async () => {
     if (!isFormValid) return;
@@ -61,11 +61,11 @@ const App: React.FC = () => {
               A
             </div>
             <h1 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-indigo-600">
-              AmoCover AI
+              AMOCover AI
             </h1>
           </div>
           <div className="text-xs font-medium text-slate-500 bg-slate-100 px-3 py-1 rounded-full">
-            Beta v1.0
+            Beta v1.1
           </div>
         </div>
       </header>

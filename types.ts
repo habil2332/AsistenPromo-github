@@ -6,7 +6,7 @@ export interface BookData {
 }
 
 export interface GeneratedText {
-  clickbait: string;
+  clickbait: string[]; // Changed from string to string[]
   short_caption: string;
   long_caption: string;
 }
@@ -27,4 +27,9 @@ export const BOOK_STYLES = [
   { id: 'horror', label: 'Gothic Horror', desc: 'Gritty, dark, terrifying atmosphere' },
   { id: 'anime', label: 'Anime / Manga', desc: 'Japanese animation style, expressive' },
   { id: 'vintage', label: 'Vintage Retro', desc: 'Old paper texture, classic typography style' },
+  { id: '3d-render', label: '3D Pixar Style', desc: 'Cute, plastic texture, expressive characters' },
+  { id: 'oil-painting', label: 'Oil Painting', desc: 'Classic art style, textured brushstrokes' },
+  { id: 'pop-art', label: 'Pop Art', desc: 'Comic book style, halftone dots, vibrant' },
+  { id: 'noir', label: 'Film Noir', desc: 'Black & white, high contrast, detective vibe' },
+  { id: 'surreal', label: 'Surrealism', desc: 'Dreamlike, bizarre, Dali-inspired imagery' },
 ];
