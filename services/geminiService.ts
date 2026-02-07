@@ -8,17 +8,23 @@ export const generateMarketingText = async (data: BookData): Promise<GeneratedTe
   if (!apiKey) throw new Error("API Key is missing");
 
   const prompt = `
-    Create a marketing package for a fiction story.
-    Title: ${data.title}
-    Author: ${data.author}
-    Synopsis: ${data.synopsis}
+    Buat paket pemasaran viral untuk cerita fiksi berikut:
+    Judul: ${data.title}
+    Penulis: ${data.author}
+    Sinopsis: ${data.synopsis}
     
-    Tasks:
-    1. Create 5 distinct "clickbait" titles that are catchy, intriguing, and viral-worthy.
-    2. Write a "short_caption" (approx 100 words). It MUST start with a strong Hook and end with a Cliffhanger that serves as a Call to Action (CTA).
-    3. Write a "long_caption" (approx 500 words). It MUST be engaging, immersive, start with a powerful Hook, and end with a suspenseful Cliffhanger CTA.
+    Tugas Anda:
+    1. Buat 5 pilihan judul "clickbait" yang sangat menggoda dan memancing rasa penasaran (viral-worthy).
+    2. Tulis "short_caption" (100 kata): Fokus pada hook pembuka yang kuat.
+    3. Tulis "long_caption" (500 kata): Fokus pada narasi mendalam yang emosional.
+    4. Tulis "promo_130" (130 kata): Gaya promosi online (TikTok/Instagram), sangat clickbait, TIDAK membocorkan isi cerita (no spoilers), fokus pada vibe dan konflik utama yang membuat orang ingin klik. Harus membuat pembaca merasa "rugi kalau tidak baca".
+    5. Tulis "promo_250" (250 kata): Gaya promosi online yang lebih persuasif, misterius, tanpa spoiler, menonjolkan keunikan cerita (Unique Selling Point), diakhiri dengan cliffhanger yang memaksa pembaca segera mencari link bacanya.
     
-    Language: Indonesian (Bahasa Indonesia).
+    Aturan Penting:
+    - Bahasa: Indonesia yang kekinian, persuasif, dan emosional.
+    - Gunakan Hook yang sangat kuat di awal.
+    - Akhiri dengan Cliffhanger/CTA (Call to Action) yang misterius.
+    - Untuk promo_130 dan promo_250: JANGAN bocorkan plot twist atau rahasia penting cerita.
   `;
 
   const response = await ai.models.generateContent({
@@ -35,8 +41,10 @@ export const generateMarketingText = async (data: BookData): Promise<GeneratedTe
           },
           short_caption: { type: Type.STRING },
           long_caption: { type: Type.STRING },
+          promo_130: { type: Type.STRING },
+          promo_250: { type: Type.STRING },
         },
-        required: ['clickbait', 'short_caption', 'long_caption'],
+        required: ['clickbait', 'short_caption', 'long_caption', 'promo_130', 'promo_250'],
       },
     },
   });
@@ -50,31 +58,35 @@ export const generateMarketingText = async (data: BookData): Promise<GeneratedTe
 export const generateSingleCover = async (data: BookData, seedOffset: number): Promise<string> => {
   if (!apiKey) throw new Error("API Key is missing");
 
-  // Providing variation by slightly tweaking the prompt based on seed/index
   const variations = [
-    "Close-up composition of main character",
-    "Wide angle cinematic scene",
-    "Character focused with symbolic elements",
-    "Atmospheric and emotional composition"
+    "Close-up portrait/object focus",
+    "Wide angle scene showing the world",
+    "Dynamic action/emotional pose",
+    "Symbolic and atmospheric composition"
   ];
 
   const variation = variations[seedOffset % variations.length];
 
   const prompt = `
-    Create a stunning, high-quality book cover art.
-    Genre/Style: ${data.style}
-    Synopsis context: ${data.synopsis}
+    Create a stunning, professional book cover design.
+    Design Style: ${data.style}
+    Story Context: ${data.synopsis}
     
-    IMPORTANT: You MUST render text on the image.
-    1. Title: "${data.title}" -> Font: BOLD, THICK, STRONG. High visibility. Placement: Top or Center.
-    2. Author: "${data.author}" -> Font: THIN, FINE, ELEGANT. Smaller than title. Placement: Bottom or below title.
-    3. Ensure the text color contrasts strongly with the background so it is easily readable.
+    TEXT OVERLAY REQUIREMENTS (MANDATORY):
+    1. Main Title: "${data.title.toUpperCase()}" 
+       - Style: EXTREMELY BOLD, thick strokes, high-impact typography.
+       - Positioning: Prominent, top or center-focused.
+    2. Author Name: "Oleh ${data.author}"
+       - Style: Thin, elegant, serif or light sans-serif font.
+       - Positioning: Bottom center or small below the title.
+    3. Readability: Ensure text color contrasts perfectly with background for 100% clarity.
     
-    Visual Requirements:
-    1. Aspect Ratio: Vertical Portrait (3:4).
-    2. Faces/Characters: Must depict people of Asian or Indonesian descent if characters are present.
-    3. Composition: ${variation}.
-    4. Quality: 4k resolution, highly detailed, trending on artstation.
+    VISUAL REQUIREMENTS:
+    - Composition: ${variation}.
+    - Lighting: Professional studio lighting or dramatic atmospheric lighting appropriate for the genre.
+    - Characters: Asian/Indonesian descent if humans are shown.
+    - Quality: 4k, digital art, polished commercial finish.
+    - Aspect Ratio: 3:4 (Standard vertical cover).
   `;
 
   const response = await ai.models.generateContent({
@@ -99,12 +111,7 @@ export const generateSingleCover = async (data: BookData, seedOffset: number): P
 };
 
 export const generateBookAssets = async (data: BookData): Promise<{ text: GeneratedText; covers: string[] }> => {
-  
-  // 1. Generate Text
   const textPromise = generateMarketingText(data);
-
-  // 2. Generate 4 Covers in parallel
-  // We call the API 4 times to get 4 distinct variations
   const coverPromises = [0, 1, 2, 3].map(i => generateSingleCover(data, i));
 
   try {

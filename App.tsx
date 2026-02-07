@@ -60,12 +60,12 @@ const App: React.FC = () => {
             <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold text-lg">
               A
             </div>
-            <h1 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-indigo-600">
-              AMOCover AI
+            <h1 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-indigo-600 uppercase tracking-tighter">
+              Asisten Promo AI
             </h1>
           </div>
-          <div className="text-xs font-medium text-slate-500 bg-slate-100 px-3 py-1 rounded-full">
-            Beta v1.1
+          <div className="text-xs font-bold text-blue-600 bg-blue-50 border border-blue-100 px-3 py-1 rounded-full">
+            PREMIUM PROMO
           </div>
         </div>
       </header>
@@ -75,10 +75,10 @@ const App: React.FC = () => {
         {/* Intro */}
         <div className="text-center mb-12 max-w-3xl mx-auto">
           <h2 className="text-4xl font-extrabold text-slate-900 mb-4 tracking-tight">
-            Buat Cover & Copywriting Novel Anda dalam Sekejap
+            Asisten Visual & Promosi Viral Novel Anda
           </h2>
           <p className="text-lg text-slate-600">
-            Cukup masukkan detail cerita, pilih gaya, dan biarkan AI kami membuat visual cover menakjubkan beserta strategi promosinya.
+            Dapatkan visual cover profesional dan strategi copywriting yang "memaksa" pembaca untuk klik. No Spoiler, Full Clickbait.
           </p>
         </div>
 
@@ -89,7 +89,7 @@ const App: React.FC = () => {
             <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
               <h3 className="text-lg font-bold text-slate-900 mb-6 flex items-center gap-2">
                 <span className="w-6 h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xs">1</span>
-                Detail Cerita
+                Input Data Novel
               </h3>
               <InputSection 
                 data={formData} 
@@ -108,13 +108,13 @@ const App: React.FC = () => {
                   onClick={handleSubmit} 
                   isLoading={loading} 
                   disabled={!isFormValid}
-                  className="w-full text-lg shadow-blue-500/30"
+                  className="w-full text-lg shadow-blue-500/30 font-bold uppercase tracking-widest"
                 >
-                  {loading ? 'Sedang Membuat Keajaiban...' : '✨ Generate Cover & Copy'}
+                  {loading ? 'Menyusun Strategi Viral...' : '🔥 Generate Visual & Promo'}
                 </Button>
                 {!isFormValid && (
-                  <p className="text-center text-xs text-slate-400 mt-2">
-                    Mohon lengkapi semua field di atas.
+                  <p className="text-center text-xs text-slate-400 mt-2 font-medium">
+                    Mohon lengkapi data judul, penulis, sinopsis, dan style.
                   </p>
                 )}
               </div>
@@ -126,11 +126,11 @@ const App: React.FC = () => {
             {!results && !loading && (
               <div className="h-full min-h-[500px] flex flex-col items-center justify-center text-slate-400 border-2 border-dashed border-slate-200 rounded-2xl bg-slate-50/50 p-8 text-center">
                 <div className="w-20 h-20 bg-blue-50 rounded-full flex items-center justify-center mb-4">
-                  <svg className="w-10 h-10 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                  <svg className="w-10 h-10 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                 </div>
-                <h3 className="text-lg font-medium text-slate-600">Hasil Akan Muncul Di Sini</h3>
-                <p className="text-sm max-w-xs mx-auto mt-2">
-                  Pratinjau cover, judul clickbait, dan caption promosi Anda akan ditampilkan setelah proses generate selesai.
+                <h3 className="text-lg font-bold text-slate-600">Kit Promosi Anda Akan Muncul Di Sini</h3>
+                <p className="text-sm max-w-xs mx-auto mt-2 text-slate-500">
+                  Visual cover, judul pancingan, dan caption promosi online akan tampil setelah tombol di sebelah kiri diklik.
                 </p>
               </div>
             )}
@@ -138,11 +138,11 @@ const App: React.FC = () => {
             {loading && (
                <div className="h-full min-h-[500px] flex flex-col items-center justify-center bg-white rounded-2xl shadow-sm border border-slate-200">
                  <div className="w-16 h-16 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin mb-6"></div>
-                 <h3 className="text-xl font-bold text-slate-800">Sedang Berpikir...</h3>
-                 <p className="text-slate-500 mt-2">Menggambar cover dan menulis caption terbaik.</p>
+                 <h3 className="text-xl font-bold text-slate-800">Menghasilkan Konten Premium...</h3>
+                 <p className="text-slate-500 mt-2">Sedang melukis cover dan merangkai kata-kata viral.</p>
                  <div className="mt-8 max-w-md w-full px-8">
                    <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
-                     <div className="h-full bg-blue-600 animate-pulse w-2/3 rounded-full"></div>
+                     <div className="h-full bg-blue-600 animate-progress-stripes w-2/3 rounded-full"></div>
                    </div>
                  </div>
                </div>
@@ -155,6 +155,18 @@ const App: React.FC = () => {
 
         </div>
       </main>
+      
+      <style>{`
+        @keyframes progress-stripes {
+          from { background-position: 1rem 0; }
+          to { background-position: 0 0; }
+        }
+        .animate-progress-stripes {
+          background-image: linear-gradient(45deg, rgba(255,255,255,.15) 25%, transparent 25%, transparent 50%, rgba(255,255,255,.15) 50%, rgba(255,255,255,.15) 75%, transparent 75%, transparent);
+          background-size: 1rem 1rem;
+          animation: progress-stripes 1s linear infinite;
+        }
+      `}</style>
     </div>
   );
 };

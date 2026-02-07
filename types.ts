@@ -6,30 +6,32 @@ export interface BookData {
 }
 
 export interface GeneratedText {
-  clickbait: string[]; // Changed from string to string[]
+  clickbait: string[];
   short_caption: string;
   long_caption: string;
+  promo_130: string; // New: 130 words promo
+  promo_250: string; // New: 250 words promo
 }
 
 export interface GeneratedContent {
-  covers: string[]; // Array of base64 strings
+  covers: string[];
   text: GeneratedText;
 }
 
 export const BOOK_STYLES = [
-  { id: 'cinematic', label: 'Cinematic Movie Poster', desc: 'Dramatic lighting, realistic textures' },
-  { id: 'minimalist', label: 'Minimalist Vector', desc: 'Clean lines, bold colors, symbolic' },
-  { id: 'fantasy', label: 'Epic Fantasy', desc: 'Magical atmosphere, digital painting style' },
-  { id: 'romance', label: 'Soft Romance', desc: 'Pastel tones, dreamy, emotional' },
-  { id: 'thriller', label: 'Dark Thriller', desc: 'High contrast, shadows, mysterious' },
-  { id: 'cyberpunk', label: 'Cyberpunk / Sci-Fi', desc: 'Neon lights, futuristic elements' },
-  { id: 'watercolor', label: 'Artistic Watercolor', desc: 'Fluid, organic, hand-painted look' },
-  { id: 'horror', label: 'Gothic Horror', desc: 'Gritty, dark, terrifying atmosphere' },
-  { id: 'anime', label: 'Anime / Manga', desc: 'Japanese animation style, expressive' },
-  { id: 'vintage', label: 'Vintage Retro', desc: 'Old paper texture, classic typography style' },
-  { id: '3d-render', label: '3D Pixar Style', desc: 'Cute, plastic texture, expressive characters' },
-  { id: 'oil-painting', label: 'Oil Painting', desc: 'Classic art style, textured brushstrokes' },
-  { id: 'pop-art', label: 'Pop Art', desc: 'Comic book style, halftone dots, vibrant' },
-  { id: 'noir', label: 'Film Noir', desc: 'Black & white, high contrast, detective vibe' },
-  { id: 'surreal', label: 'Surrealism', desc: 'Dreamlike, bizarre, Dali-inspired imagery' },
+  { id: 'photographic', label: 'Photographic Realism', desc: 'Real people, cinematic lighting, movie-poster look' },
+  { id: 'vector', label: 'Modern Vector', desc: 'Flat illustration, clean shapes, bold colors (Trending for RomCom)' },
+  { id: 'digital-painting', label: 'Epic Digital Painting', desc: 'Highly detailed, painterly, fantasy/game art style' },
+  { id: 'minimalist', label: 'Minimalist Symbolic', desc: 'Simple bold icon, negative space, clean typography focus' },
+  { id: 'double-exposure', label: 'Double Exposure', desc: 'Character silhouette filled with scenery/landscape' },
+  { id: 'typography-heavy', label: 'Big Bold Typography', desc: 'Large dominant text intertwined with minimal graphics' },
+  { id: 'historical', label: 'Historical Fine Art', desc: 'Oil/Classic painting style, vintage texture' },
+  { id: 'noir', label: 'Dark Noir & Gritty', desc: 'High contrast, shadows, black & white, mystery vibe' },
+  { id: 'neon', label: 'Neon Cyberpunk', desc: 'Glowing lights, futuristic tech, dark background' },
+  { id: 'watercolor', label: 'Soft Watercolor', desc: 'Fluid, pastel colors, dreamy, romantic atmosphere' },
+  { id: 'anime', label: 'Anime / Manhwa', desc: 'Japanese animation style, expressive characters' },
+  { id: 'horror', label: 'Gothic Horror', desc: 'Dark, terrifying, fog, distressed textures' },
+  { id: 'abstract', label: 'Abstract / Geometric', desc: 'Shapes, patterns, conceptual, modern literary look' },
+  { id: 'silhouette', label: 'Silhouette & Fog', desc: 'Backlit figures, mysterious atmosphere, thriller vibe' },
+  { id: '3d-pixar', label: '3D Character', desc: 'Cute, plastic textures, bright lighting (Middle Grade)' },
 ];
